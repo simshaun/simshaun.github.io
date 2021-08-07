@@ -1,0 +1,29 @@
+.post-list__item {
+  display: grid;
+  grid-template-areas:
+    'date'
+    'heading'
+    'tags';
+}
+
+@screen md {
+  .post-list__item {
+    @apply gap-x-4;
+    grid-template-columns: 120px auto;
+    grid-template-areas:
+      'date heading'
+      'date tags';
+  }
+}
+
+.post-list__item-heading {
+  grid-area: heading;
+}
+
+.post-list__item-date {
+  grid-area: date;
+}
+
+.post-list__item-tags {
+  grid-area: tags;
+}

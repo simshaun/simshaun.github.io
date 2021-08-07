@@ -1,0 +1,14 @@
+{
+  "items": [
+    {
+      "text": "Home",
+      "url": "/",
+      "external": false
+    },
+    {
+      "text": "GitHub",
+      "url": "https://github.com/simshaun",
+      "external": false
+    }
+  ]
+}

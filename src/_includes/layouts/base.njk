@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.url }}/feed.xml" />
+  <link rel="icon" href="{{ site.faviconPath }}" type="image/png" />
+  {% include "partials/global/meta-info.njk" %}
+  <script>document.documentElement.classList.remove('no-js');</script>
+  <link rel="stylesheet" type="text/css" href="{{ '/assets/css/app.css' | url }}">
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <a class="skip-link sr-only" href="#main-content">Skip to content</a>
+
+  {% include "partials/global/site-head.njk" %}
+
+  <main id="main-content">
+    {% block content %}
+    {% endblock content %}
+  </main>
+
+  {% include "partials/global/site-foot.njk" %}
+
+  {% block foot %}{% endblock %}
+
+  <script type="module" src="/js/components/theme-toggle.js" async defer></script>
+</body>
+</html>

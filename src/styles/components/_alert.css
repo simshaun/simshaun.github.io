@@ -1,0 +1,6 @@
+.alert {
+  @apply p-4 mb-6 rounded border;
+  background-color: #fff3cd;
+  border-color: #ffecb5;
+  color: #664d03;
+}

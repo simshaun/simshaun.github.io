@@ -1,0 +1,17 @@
+<header role="banner" class="site-head py-7">
+  <div class="wrapper">
+    <div class="site-head__inner container flex justify-between items-center">
+      <a href="/" class="site-head__site-name leading-tight bg-none text-color-inherit">
+        <span class="sr-only">{{ site.name }} - Home</span>
+        <span class="site-head__site-name font-semibold text-xl" aria-hidden="true">{{ site.name }}</span>
+      </a>
+      <div class="flex items-center">
+        <div class="mr-4">
+          {% set ariaLabel = 'navigation' %}
+          {% include "partials/components/nav.njk" %}
+        </div>
+        <theme-toggle></theme-toggle>
+      </div>
+    </div>
+  </div>
+</header>

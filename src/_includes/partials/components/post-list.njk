@@ -1,0 +1,33 @@
+{% if postListItems.length %}
+  <section class="post-list pt-7 mb-9">
+    <div class="post-list__inner container">
+      <h2 class="post-list__heading font-bold md:font-extrabold mb-2">
+        {{ postListHeading }}
+      </h2>
+      <ol class="post-list__items pt-3 space-y-9" reversed>
+        {% for item in postListItems %}
+          {% if item.date.getTime() <= global.now %}
+            <li class="post-list__item">
+              <h3 class="post-list__item-heading font-sans font-semibold text-lg text-color-inherit leading-tight mt-2 md:mt-0 mb-2 md:mb-3">
+                <a href="{{ item.url }}" class="post-list__link text-color-inherit no-underline" rel="bookmark">{{ item.data.title }}</a>
+              </h3>
+
+              <time class="post-list__item-date" datetime="{{ item.date | dateIso }}">{{ item.date | easyDate }}</time>
+
+              {% if item.data.tags -%}
+                <ul class="post-list__tags mt-2 flex flex-wrap items-center">
+                  <li class="mr-4">Tags:</li>
+                  {% for tag in item.data.tags %}
+                    <li class="mr-4">
+                      <a href="/tags/{{ tag }}">{{ tag }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ol>
+    </div>
+  </section>
+{% endif %}

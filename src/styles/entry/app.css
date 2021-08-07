@@ -1,0 +1,12 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import '@tailwindcss/typography/dist/typography';
+@import 'tailwindcss/utilities';
+@import 'prism-themes/themes/prism-duotone-dark';
+
+@import '../components/_alert.css';
+@import '../components/_button.css';
+@import '../components/_intro.css';
+@import '../components/_post-list.css';
+@import '../components/_tag.css';
+@import '../app.css';

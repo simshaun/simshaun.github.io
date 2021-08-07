@@ -1,0 +1,25 @@
+{% if navigation.items %}
+  <nav class="nav" aria-label="{{ariaLabel}}">
+    <ul class="nav__list flex items-center justify-center md:justify-end">
+      {% for item in navigation.items %}
+        {% set relAttribute = '' %}
+        {% set currentAttribute = '' %}
+
+        {% if item.rel %}
+          {% set relAttribute = ' rel="' + item.rel + '"' %}
+        {% endif %}
+
+        {% if page.url == item.url %}
+          {% set currentAttribute = ' aria-current="page"' %}
+        {% endif %}
+
+        <li class="nav__item">
+          <a href="{{ item.url }}"{{ relAttribute | safe }}{{ currentAttribute | safe }}
+            class="inline-block text-color-inherit my-1 mx-2 rounded">
+            {{ item.text }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
+{% endif %}

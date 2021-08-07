@@ -1,0 +1,37 @@
+{% extends 'layouts/base.njk' %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{{ '/assets/css/post.css' | url }}">
+{% endblock %}
+
+{% set introHeading = title %}
+{% set introSummary %}
+  <time datetime="{{ date | dateIso }}">{{ date | easyDate }}</time>
+{% endset %}
+
+{% block content %}
+  <article class="post">
+    {% include "partials/components/intro.njk" %}
+
+    <div class="post__body container mt-9 mb-9 py-9 p-content">
+      {{ content | safe }}
+    </div>
+
+    {% if tags %}
+      <footer class="post__footer bg-primary text-primary-contrast py-5">
+        <div class="container flex align-center">
+          <h2 class="font-sans text-xl font-semibold text-color-inherit m-0">Filed under</h2>
+          <ul class="post__tags flex flex-wrap items-center ml-4">
+            {% for item in tags -%}
+              <li class="mr-4">
+                <a href="/tags/{{ item }}" class="tag">{{ item }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </footer>
+    {% endif %}
+  </article>
+{% endblock %}
+
+{{ content | safe }}

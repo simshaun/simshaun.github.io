@@ -1,0 +1,28 @@
+{
+  "name": "simshaun.github.io",
+  "private": true,
+  "version": "1.0.0",
+  "author": "Shaun Simmons",
+  "devDependencies": {
+    "@11ty/eleventy": "^0.12.1",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^3.1.2",
+    "@tailwindcss/typography": "^0.4.1",
+    "autoprefixer": "^10.3.1",
+    "cross-env": "^7.0.3",
+    "cssnano": "^5.0.7",
+    "html-minifier": "^4.0.0",
+    "luxon": "^2.0.1",
+    "postcss-cli": "^8.3.1",
+    "postcss-import": "^14.0.2",
+    "postcss-mixins": "^8.1.0",
+    "postcss-nested": "^5.0.6",
+    "prism-themes": "^1.8.0",
+    "tailwindcss": "^2.2.7"
+  },
+  "scripts": {
+    "css": "postcss src/styles/entry/ -d _site/assets/css/",
+    "css-watch": "cross-env TAILWIND_MODE=watch postcss src/styles/entry/ -d _site/assets/css/ -w",
+    "build": "npx @11ty/eleventy",
+    "serve": "npx @11ty/eleventy --serve"
+  }
+}

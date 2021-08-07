@@ -1,0 +1,9 @@
+{
+  "name": "Shaun",
+  "url": "https://shaun.pub",
+  "authorEmail": "shaun@shaun.pub",
+  "authorHandle": "@simshaun",
+  "authorName": "Shaun",
+  "maxPostsPerPage": 5,
+  "faviconPath": "/images/favicon.png"
+}

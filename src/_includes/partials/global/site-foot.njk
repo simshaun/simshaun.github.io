@@ -1,0 +1,13 @@
+<footer role="contentinfo" class="site-foot py-7">
+  <div class="site-foot__inner container md:flex justify-center md:justify-between items-center">
+    <article class="site-foot__details text-center md:text-left">
+      © Copyright {{ global.dateNow | formatDate('yyyy') }}, Shaun
+    </article>
+    <div>
+      <div class="mt-4 md:mt-0 mb-4">
+        {% set ariaLabel = 'footer navigation' %}
+        {% include "partials/components/nav.njk" %}
+      </div>
+    </div>
+  </div>
+</footer>
