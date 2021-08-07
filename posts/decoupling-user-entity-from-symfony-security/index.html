@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="alternate" type="application/rss+xml" title="" href="https://shaun.pub/feed.xml" />
+  <link rel="icon" href="/images/favicon.png" type="image/png" />
+   
+
+<title>Decoupling your User entity from Symfony’s security - Shaun</title>
+<link rel="canonical" href="https://shaun.pub/posts/decoupling-user-entity-from-symfony-security/" />
+
+<meta property="og:site_name" content="Shaun" />
+<meta property="og:title" content="Decoupling your User entity from Symfony’s security - Shaun" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://shaun.pub/posts/decoupling-user-entity-from-symfony-security/" />
+
+
+  <meta name="twitter:creator" content="@simshaun" />
+
+
+
+
+
+
+  <script>document.documentElement.classList.remove('no-js');</script>
+  <link rel="stylesheet" type="text/css" href="/assets/css/app.css">
+  
+  <link rel="stylesheet" type="text/css" href="/assets/css/post.css">
+
+</head>
+<body>
+  <a class="skip-link sr-only" href="#main-content">Skip to content</a>
+
+  <header role="banner" class="site-head py-7">
+  <div class="wrapper">
+    <div class="site-head__inner container flex justify-between items-center">
+      <a href="/" class="site-head__site-name leading-tight bg-none text-color-inherit">
+        <span class="sr-only">Shaun - Home</span>
+        <span class="site-head__site-name font-semibold text-xl" aria-hidden="true">Shaun</span>
+      </a>
+      <div class="flex items-center">
+        <div class="mr-4">
+          
+          
+  <nav class="nav" aria-label="navigation">
+    <ul class="nav__list flex items-center justify-center md:justify-end">
+      
+        
+        
+
+        
+
+        
+
+        <li class="nav__item">
+          <a href="/"
+            class="inline-block text-color-inherit my-1 mx-2 rounded">
+            Home
+          </a>
+        </li>
+      
+        
+        
+
+        
+
+        
+
+        <li class="nav__item">
+          <a href="https://github.com/simshaun"
+            class="inline-block text-color-inherit my-1 mx-2 rounded">
+            GitHub
+          </a>
+        </li>
+      
+    </ul>
+  </nav>
+
+        </div>
+        <theme-toggle></theme-toggle>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <main id="main-content">
+    
+  <article class="post">
+    <header class="intro pt-9 pb-10">
+  <div class="intro__inner container space-y-5">
+    <h1 class="intro__heading font-bold md:font-black text-color-inherit leading-tight">
+      Decoupling your User entity from Symfony’s security
+    </h1>
+    
+      <div class="intro__summary max-w-2xl space-y-5 text-sm leading-normal">
+        
+  <time datetime="">October 10, 2018</time>
+
+      </div>
+    
+  </div>
+</header>
+
+    <div class="post__body container mt-9 mb-9 py-9 p-content">
+      <div class="alert">
+  <strong>2021-08-07</strong><br>
+  Symfony has changed a bit since the time of writing. As of 5.3, Guard authenticators have
+  been deprecated. The code below would need to change to use the
+  <a href="https://symfony.com/doc/current/security/authenticator_manager.html">new authenticator-based system</a>.
+</div>
+<p>This post is about my experience in decoupling the security component User from my
+application User as described on <a href="https://stovepipe.systems/post/decoupling-your-security-user">Iltar van der Berg’s post</a>.</p>
+<p>I thought I would write this article to document my takeaways from Iltar’s blog post,
+and maybe help others with implementation by giving more code examples.</p>
+<hr>
+<h2>Why decouple them?</h2>
+<p>A big reason I had was a security hole caused by references. The User entity was being
+stored in session and Doctrine held a reference to it in its identity map. The app was
+making changes to the User entity that weren't persisted in the DB, yet <em>were</em>
+unintentionally being stored in session (due to the reference) and causing issues.</p>
+<p>That particular case is easy to work around, but it was only an accidental discovery.
+It got me wondering if similar problems could occur in any of the other many parts of
+the app that touch User entities.</p>
+<p>Besides that, there are cases I've had where trying to store the User entity in session
+was really tricky. Relationships, roles from DB, serialization/deserialization, and impersonation.</p>
+<p>Creating a new “SecurityUser” for Symfony's security component greatly simplified things
+in the end.</p>
+<hr>
+<h2>How to separate them</h2>
+<p>Iltar’s blog post gives some code but it doesn’t fully connect the dots. I’d like to show how
+I did it. Please note that this is just one possible way and isn’t a one-size-fits-all solution.</p>
+<ol>
+<li>
+<p>Create a separate SecurityUser class to be used by the Security component. <code>SecurityUser.php</code> below</p>
+</li>
+<li>
+<p>Create a user provider to load a SecurityUser by email. <code>SecurityUserProvider.php</code> below.
+(This is optional if you’re using a Guard class; you could load the user in Guard’s getUser method.)</p>
+</li>
+<li>
+<p>Configure Symfony to use the new SecurityUser and provider. <code>security.yaml</code> below</p>
+</li>
+<li>
+<p>(optional) Create a user provider to fetch a User entity when provided a SecurityUser.
+<code>CurrentUserProvider.php</code> below. In my apps, I inject this service where I need the current user.
+There are other ways. e.g. As Iltar said, for controllers you could create an ArgumentValueResolver.</p>
+</li>
+</ol>
+<h3>Code:</h3>
+<p><em>(public props &amp; methods clipped for brevity)</em></p>
+<script src="https://gist.github.com/simshaun/89407e39c7c6ef66268fd5327ea8a6a1.js"></script>
+
+    </div>
+
+    
+      <footer class="post__footer bg-primary text-primary-contrast py-5">
+        <div class="container flex align-center">
+          <h2 class="font-sans text-xl font-semibold text-color-inherit m-0">Filed under</h2>
+          <ul class="post__tags flex flex-wrap items-center ml-4">
+            <li class="mr-4">
+                <a href="/tags/PHP" class="tag">PHP</a>
+              </li>
+            <li class="mr-4">
+                <a href="/tags/Symfony" class="tag">Symfony</a>
+              </li>
+            
+          </ul>
+        </div>
+      </footer>
+    
+  </article>
+
+  </main>
+
+  <footer role="contentinfo" class="site-foot py-7">
+  <div class="site-foot__inner container md:flex justify-center md:justify-between items-center">
+    <article class="site-foot__details text-center md:text-left">
+      © Copyright 2021, Shaun
+    </article>
+    <div>
+      <div class="mt-4 md:mt-0 mb-4">
+        
+        
+  <nav class="nav" aria-label="footer navigation">
+    <ul class="nav__list flex items-center justify-center md:justify-end">
+      
+        
+        
+
+        
+
+        
+
+        <li class="nav__item">
+          <a href="/"
+            class="inline-block text-color-inherit my-1 mx-2 rounded">
+            Home
+          </a>
+        </li>
+      
+        
+        
+
+        
+
+        
+
+        <li class="nav__item">
+          <a href="https://github.com/simshaun"
+            class="inline-block text-color-inherit my-1 mx-2 rounded">
+            GitHub
+          </a>
+        </li>
+      
+    </ul>
+  </nav>
+
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  
+
+  <script type="module" src="/js/components/theme-toggle.js" async defer></script>
+</body>
+</html>

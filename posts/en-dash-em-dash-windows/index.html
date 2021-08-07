@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="alternate" type="application/rss+xml" title="" href="https://shaun.pub/feed.xml" />
+  <link rel="icon" href="/images/favicon.png" type="image/png" />
+   
+
+<title>Inserting En dash and Em dash on Windows - Shaun</title>
+<link rel="canonical" href="https://shaun.pub/posts/en-dash-em-dash-windows/" />
+
+<meta property="og:site_name" content="Shaun" />
+<meta property="og:title" content="Inserting En dash and Em dash on Windows - Shaun" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://shaun.pub/posts/en-dash-em-dash-windows/" />
+
+
+  <meta name="twitter:creator" content="@simshaun" />
+
+
+
+
+
+
+  <script>document.documentElement.classList.remove('no-js');</script>
+  <link rel="stylesheet" type="text/css" href="/assets/css/app.css">
+  
+  <link rel="stylesheet" type="text/css" href="/assets/css/post.css">
+
+</head>
+<body>
+  <a class="skip-link sr-only" href="#main-content">Skip to content</a>
+
+  <header role="banner" class="site-head py-7">
+  <div class="wrapper">
+    <div class="site-head__inner container flex justify-between items-center">
+      <a href="/" class="site-head__site-name leading-tight bg-none text-color-inherit">
+        <span class="sr-only">Shaun - Home</span>
+        <span class="site-head__site-name font-semibold text-xl" aria-hidden="true">Shaun</span>
+      </a>
+      <div class="flex items-center">
+        <div class="mr-4">
+          
+          
+  <nav class="nav" aria-label="navigation">
+    <ul class="nav__list flex items-center justify-center md:justify-end">
+      
+        
+        
+
+        
+
+        
+
+        <li class="nav__item">
+          <a href="/"
+            class="inline-block text-color-inherit my-1 mx-2 rounded">
+            Home
+          </a>
+        </li>
+      
+        
+        
+
+        
+
+        
+
+        <li class="nav__item">
+          <a href="https://github.com/simshaun"
+            class="inline-block text-color-inherit my-1 mx-2 rounded">
+            GitHub
+          </a>
+        </li>
+      
+    </ul>
+  </nav>
+
+        </div>
+        <theme-toggle></theme-toggle>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <main id="main-content">
+    
+  <article class="post">
+    <header class="intro pt-9 pb-10">
+  <div class="intro__inner container space-y-5">
+    <h1 class="intro__heading font-bold md:font-black text-color-inherit leading-tight">
+      Inserting En dash and Em dash on Windows
+    </h1>
+    
+      <div class="intro__summary max-w-2xl space-y-5 text-sm leading-normal">
+        
+  <time datetime="">February 6, 2019</time>
+
+      </div>
+    
+  </div>
+</header>
+
+    <div class="post__body container mt-9 mb-9 py-9 p-content">
+      <p>Inserting En (–) dashes and Em (—) dashes on Windows can be difficult. Some word processing apps
+will convert multiple dashes into them, but usually I need them in websites or other apps.</p>
+<p>Keyboards with a numpad allow you to press Alt+0150 or Alt+0151, but what if you don’t
+have a numpad or don't want to remember the numbers?</p>
+<p>The solution I use is <a href="https://www.autohotkey.com/">AutoHotkey</a>. It’s a free scripting tool that
+lets you do all kinds of things. Here, I want to replicate Mac’s keyboard shortcuts:</p>
+<ul>
+<li>Alt+Minus for En dash</li>
+<li>Alt+Shift+Minus for Em dash</li>
+</ul>
+<p>The AutoHotkey script for it is pretty simple:</p>
+<pre class="language-autohotkey"><code class="language-autohotkey"><span class="token comment">; Alt+Minus = En dash</span><br><span class="token operator">!</span><span class="token operator">-</span><span class="token punctuation">:</span><span class="token punctuation">:</span> <br><span class="token selector">Send</span> <span class="token punctuation">{</span>–<span class="token punctuation">}</span><br><span class="token selector">return</span><br><br><span class="token comment">; Shift+Alt+Minus = Em dash</span><br><span class="token operator">+</span><span class="token operator">!</span><span class="token operator">-</span><span class="token punctuation">:</span><span class="token punctuation">:</span><br><span class="token selector">Send</span> <span class="token punctuation">{</span>—<span class="token punctuation">}</span><br><span class="token selector">return</span></code></pre>
+<p>Put that in your AutoHotkey script, reload AutoHotkey, and then you’ll be able to use
+those keyboard shortcuts practically anywhere.</p>
+
+    </div>
+
+    
+      <footer class="post__footer bg-primary text-primary-contrast py-5">
+        <div class="container flex align-center">
+          <h2 class="font-sans text-xl font-semibold text-color-inherit m-0">Filed under</h2>
+          <ul class="post__tags flex flex-wrap items-center ml-4">
+            <li class="mr-4">
+                <a href="/tags/Windows" class="tag">Windows</a>
+              </li>
+            <li class="mr-4">
+                <a href="/tags/AutoHotkey" class="tag">AutoHotkey</a>
+              </li>
+            
+          </ul>
+        </div>
+      </footer>
+    
+  </article>
+
+  </main>
+
+  <footer role="contentinfo" class="site-foot py-7">
+  <div class="site-foot__inner container md:flex justify-center md:justify-between items-center">
+    <article class="site-foot__details text-center md:text-left">
+      © Copyright 2021, Shaun
+    </article>
+    <div>
+      <div class="mt-4 md:mt-0 mb-4">
+        
+        
+  <nav class="nav" aria-label="footer navigation">
+    <ul class="nav__list flex items-center justify-center md:justify-end">
+      
+        
+        
+
+        
+
+        
+
+        <li class="nav__item">
+          <a href="/"
+            class="inline-block text-color-inherit my-1 mx-2 rounded">
+            Home
+          </a>
+        </li>
+      
+        
+        
+
+        
+
+        
+
+        <li class="nav__item">
+          <a href="https://github.com/simshaun"
+            class="inline-block text-color-inherit my-1 mx-2 rounded">
+            GitHub
+          </a>
+        </li>
+      
+    </ul>
+  </nav>
+
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  
+
+  <script type="module" src="/js/components/theme-toggle.js" async defer></script>
+</body>
+</html>

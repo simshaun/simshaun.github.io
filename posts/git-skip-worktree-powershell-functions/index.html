@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="alternate" type="application/rss+xml" title="" href="https://shaun.pub/feed.xml" />
+  <link rel="icon" href="/images/favicon.png" type="image/png" />
+   
+
+<title>git skip-worktree PowerShell aliases - Shaun</title>
+<link rel="canonical" href="https://shaun.pub/posts/git-skip-worktree-powershell-functions/" />
+
+<meta property="og:site_name" content="Shaun" />
+<meta property="og:title" content="git skip-worktree PowerShell aliases - Shaun" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://shaun.pub/posts/git-skip-worktree-powershell-functions/" />
+
+
+  <meta name="twitter:creator" content="@simshaun" />
+
+
+
+
+
+
+  <script>document.documentElement.classList.remove('no-js');</script>
+  <link rel="stylesheet" type="text/css" href="/assets/css/app.css">
+  
+  <link rel="stylesheet" type="text/css" href="/assets/css/post.css">
+
+</head>
+<body>
+  <a class="skip-link sr-only" href="#main-content">Skip to content</a>
+
+  <header role="banner" class="site-head py-7">
+  <div class="wrapper">
+    <div class="site-head__inner container flex justify-between items-center">
+      <a href="/" class="site-head__site-name leading-tight bg-none text-color-inherit">
+        <span class="sr-only">Shaun - Home</span>
+        <span class="site-head__site-name font-semibold text-xl" aria-hidden="true">Shaun</span>
+      </a>
+      <div class="flex items-center">
+        <div class="mr-4">
+          
+          
+  <nav class="nav" aria-label="navigation">
+    <ul class="nav__list flex items-center justify-center md:justify-end">
+      
+        
+        
+
+        
+
+        
+
+        <li class="nav__item">
+          <a href="/"
+            class="inline-block text-color-inherit my-1 mx-2 rounded">
+            Home
+          </a>
+        </li>
+      
+        
+        
+
+        
+
+        
+
+        <li class="nav__item">
+          <a href="https://github.com/simshaun"
+            class="inline-block text-color-inherit my-1 mx-2 rounded">
+            GitHub
+          </a>
+        </li>
+      
+    </ul>
+  </nav>
+
+        </div>
+        <theme-toggle></theme-toggle>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <main id="main-content">
+    
+  <article class="post">
+    <header class="intro pt-9 pb-10">
+  <div class="intro__inner container space-y-5">
+    <h1 class="intro__heading font-bold md:font-black text-color-inherit leading-tight">
+      git skip-worktree PowerShell aliases
+    </h1>
+    
+      <div class="intro__summary max-w-2xl space-y-5 text-sm leading-normal">
+        
+  <time datetime="">August 6, 2021</time>
+
+      </div>
+    
+  </div>
+</header>
+
+    <div class="post__body container mt-9 mb-9 py-9 p-content">
+      <p>I frequently need Git to ignore a change I make to a file. To do that, I use <a href="https://git-scm.com/docs/git-update-index#_skip_worktree_bit">git's skip-worktree feature</a>.</p>
+<p>These PowerShell functions make it easier and faster to mark/unmark files.</p>
+<h2>Instructions</h2>
+<p>Add the code below to your PowerShell profile. To find out where that is, open PowerShell and enter:
+<code>$PROFILE</code>.</p>
+<p>To learn more about profiles, check out <a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_profiles">the Microsoft docs</a>.</p>
+<h2>Code</h2>
+<pre class="language-powershell"><code class="language-powershell"><span class="token comment">&lt;#<br>Command: gitskipped<br>Description: List skipped files in git<br>Usage: gitskipped<br>#></span><br><span class="token keyword">function</span> gitskipped <span class="token punctuation">{</span><br>  <span class="token punctuation">(</span>git <span class="token function">ls</span><span class="token operator">-</span>files <span class="token operator">-</span>v <span class="token variable">$args</span><span class="token punctuation">)</span> <span class="token operator">-</span>split <span class="token string">"\r\n"</span> <span class="token punctuation">|</span> <span class="token function">Select-String</span> <span class="token operator">-</span>Pattern <span class="token string">'^S '</span> <span class="token punctuation">|</span> <span class="token function">ForEach-Object</span> <span class="token punctuation">{</span><br>    <span class="token function">Write-Output</span> <span class="token variable">$_</span><span class="token punctuation">.</span>Line<span class="token punctuation">.</span>Substring<span class="token punctuation">(</span>2<span class="token punctuation">)</span><br>  <span class="token punctuation">}</span><br><span class="token punctuation">}</span><br><br><br><span class="token comment">&lt;#<br>Command: gitskip<br>Description: Mark file(s) as "skip-worktree" in git<br>Usage: gitskip .env<br>#></span><br><span class="token keyword">function</span> gitskip <span class="token punctuation">{</span><br>  git <span class="token function">update-index</span> <span class="token operator">--</span><span class="token function">skip-worktree</span> <span class="token variable">$args</span><br><span class="token punctuation">}</span><br><br><br><span class="token comment">&lt;#<br>Command: gitunskip<br>Description: Unmark file(s) as "skip-worktree" in git<br>Usage: gitunskip .env<br>#></span><br><span class="token keyword">function</span> gitunskip <span class="token punctuation">{</span><br>  git <span class="token function">update-index</span> <span class="token operator">--</span>no<span class="token operator">-</span><span class="token function">skip-worktree</span> <span class="token variable">$args</span><br><span class="token punctuation">}</span><br><br><br><span class="token comment">&lt;#<br>Command: gitunskipall<br>Description: Unmark all skipped files in git<br>Usage: gitunskipall<br>#></span><br><span class="token keyword">function</span> gitunskipall <span class="token punctuation">{</span><br>  <span class="token variable">$files</span> = @<span class="token punctuation">(</span><span class="token punctuation">(</span>git <span class="token function">ls</span><span class="token operator">-</span>files <span class="token operator">-</span>v <span class="token variable">$args</span><span class="token punctuation">)</span> <span class="token operator">-</span>split <span class="token string">"\r\n"</span> <span class="token punctuation">|</span> <span class="token function">Select-String</span> <span class="token operator">-</span>Pattern <span class="token string">'^S '</span> <span class="token punctuation">|</span> <span class="token function">ForEach-Object</span> <span class="token punctuation">{</span> <span class="token variable">$_</span><span class="token punctuation">.</span>Line<span class="token punctuation">.</span>Substring<span class="token punctuation">(</span>2<span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><br>  git <span class="token function">update-index</span> <span class="token operator">--</span>no<span class="token operator">-</span><span class="token function">skip-worktree</span> <span class="token variable">$files</span><br><span class="token punctuation">}</span></code></pre>
+
+    </div>
+
+    
+      <footer class="post__footer bg-primary text-primary-contrast py-5">
+        <div class="container flex align-center">
+          <h2 class="font-sans text-xl font-semibold text-color-inherit m-0">Filed under</h2>
+          <ul class="post__tags flex flex-wrap items-center ml-4">
+            <li class="mr-4">
+                <a href="/tags/Windows" class="tag">Windows</a>
+              </li>
+            <li class="mr-4">
+                <a href="/tags/Git" class="tag">Git</a>
+              </li>
+            <li class="mr-4">
+                <a href="/tags/PowerShell" class="tag">PowerShell</a>
+              </li>
+            
+          </ul>
+        </div>
+      </footer>
+    
+  </article>
+
+  </main>
+
+  <footer role="contentinfo" class="site-foot py-7">
+  <div class="site-foot__inner container md:flex justify-center md:justify-between items-center">
+    <article class="site-foot__details text-center md:text-left">
+      © Copyright 2021, Shaun
+    </article>
+    <div>
+      <div class="mt-4 md:mt-0 mb-4">
+        
+        
+  <nav class="nav" aria-label="footer navigation">
+    <ul class="nav__list flex items-center justify-center md:justify-end">
+      
+        
+        
+
+        
+
+        
+
+        <li class="nav__item">
+          <a href="/"
+            class="inline-block text-color-inherit my-1 mx-2 rounded">
+            Home
+          </a>
+        </li>
+      
+        
+        
+
+        
+
+        
+
+        <li class="nav__item">
+          <a href="https://github.com/simshaun"
+            class="inline-block text-color-inherit my-1 mx-2 rounded">
+            GitHub
+          </a>
+        </li>
+      
+    </ul>
+  </nav>
+
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  
+
+  <script type="module" src="/js/components/theme-toggle.js" async defer></script>
+</body>
+</html>
