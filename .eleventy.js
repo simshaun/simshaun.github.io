@@ -7,6 +7,7 @@ const site = require('./src/_data/site.json')
 module.exports = function (config) {
   // Passthrough copy
   config.addPassthroughCopy('src/CNAME')
+  config.addPassthroughCopy('src/images')
   config.addPassthroughCopy('src/js')
   config.addPassthroughCopy('src/projects')
 
