@@ -1,4 +1,6 @@
 const DateTime = require('luxon').DateTime
+const fs = require('fs')
+const path = require('path')
 
 module.exports = {
   htmlDateString: function (dateObj) {
@@ -29,5 +31,14 @@ module.exports = {
 
   spaceless: function (text) {
     return text.replace(/\s+/g, ' ').replace(/>\s</g, '><')
+  },
+
+  cssManifest: function (cssPath) {
+    const origDirname = path.dirname(cssPath)
+    const origFilename = path.basename(cssPath)
+    const manifestPath = path.join(__dirname, '../_site/manifest.json')
+    const manifest = JSON.parse(fs.readFileSync(manifestPath))
+    if (origFilename in manifest) return `${origDirname}/${manifest[origFilename]}`
+    return cssPath
   },
 }

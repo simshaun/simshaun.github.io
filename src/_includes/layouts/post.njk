@@ -1,7 +1,7 @@
 {% extends 'layouts/base.njk' %}
 
 {% block head %}
-  <link rel="stylesheet" type="text/css" href="{{ '/assets/css/post.css' | url }}">
+  <link rel="stylesheet" type="text/css" href="{{ '/assets/css/post.css' | url | cssManifest }}">
 {% endblock %}
 
 {% set introHeading = title %}

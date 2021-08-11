@@ -8,5 +8,10 @@ module.exports = {
     require('cssnano')({
       preset: 'default',
     }),
+    require('postcss-hash')({
+      algorithm: 'sha256',
+      trim: 20,
+      manifest: './_site/manifest.json',
+    }),
   ],
 }

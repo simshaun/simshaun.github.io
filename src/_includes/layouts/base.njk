@@ -8,7 +8,7 @@
   <link rel="shortcut icon" href="{{ site.faviconPath }}" type="image/png" sizes="512x512" />
   {% include "partials/global/meta-info.njk" %}
   <script>document.documentElement.classList.remove('no-js');</script>
-  <link rel="stylesheet" type="text/css" href="{{ '/assets/css/app.css' | url }}">
+  <link rel="stylesheet" type="text/css" href="{{ '/assets/css/app.css' | url | cssManifest }}">
   {% block head %}{% endblock %}
 </head>
 <body>
