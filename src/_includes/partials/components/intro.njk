@@ -1,11 +1,18 @@
 <header class="intro pt-9 pb-10">
-  <div class="intro__inner container space-y-5">
-    <h1 class="intro__heading{{ ' intro__heading--compact' if page.url === '/' }} font-bold md:font-black text-color-inherit leading-tight">
-      {{ introHeading }}
-    </h1>
-    {% if introSummary %}
-      <div class="intro__summary max-w-2xl space-y-5 text-sm leading-normal">
-        {{ introSummary | safe }}
+  <div class="intro__inner container flex">
+    <div class="space-y-5">
+      <h1 class="intro__heading{{ ' intro__heading--compact' if page.url === '/' }} font-bold md:font-black text-color-inherit leading-tight">
+        {{ introHeading }}
+      </h1>
+      {% if introSummary %}
+        <div class="intro__summary max-w-2xl space-y-5 text-sm leading-normal">
+          {{ introSummary | safe }}
+        </div>
+      {% endif %}
+    </div>
+    {% if introPhoto %}
+      <div class="intro__photo ml-auto">
+        {{ introPhoto | safe }}
       </div>
     {% endif %}
   </div>
