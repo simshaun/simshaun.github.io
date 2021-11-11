@@ -8,13 +8,13 @@
   <link rel="shortcut icon" href="/images/favicon.png" type="image/png" sizes="512x512" />
    
 
-<title>Tag Archive - Shaun</title>
-<link rel="canonical" href="https://shaun.pub/tags/PowerShell/" />
+<title>Using PowerShell to launch multiple npm/yarn scripts in a multi-pane Windows Terminal - Shaun</title>
+<link rel="canonical" href="https://shaun.pub/posts/powershell-yarn-multipane-windows-terminal/" />
 
 <meta property="og:site_name" content="Shaun" />
-<meta property="og:title" content="Tag Archive - Shaun" />
+<meta property="og:title" content="Using PowerShell to launch multiple npm/yarn scripts in a multi-pane Windows Terminal - Shaun" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://shaun.pub/tags/PowerShell/" />
+<meta property="og:url" content="https://shaun.pub/posts/powershell-yarn-multipane-windows-terminal/" />
 
 
   <meta name="twitter:creator" content="@simshaun" />
@@ -27,6 +27,8 @@
   <script>document.documentElement.classList.remove('no-js');</script>
   <link rel="stylesheet" type="text/css" href="/assets/css/app.e9088b00e667a7187562.css">
   
+  <link rel="stylesheet" type="text/css" href="/assets/css/post.620c9c550e47172a0f46.css">
+
 </head>
 <body>
   <a class="skip-link sr-only" href="#main-content">Skip to content</a>
@@ -85,96 +87,67 @@
 
   <main id="main-content">
     
-  <header class="intro pt-9 pb-10">
+  <article class="post">
+    <header class="intro pt-9 pb-10">
   <div class="intro__inner container flex">
     <div class="space-y-5">
       <h1 class="intro__heading font-bold md:font-black text-color-inherit leading-tight">
-        Posts filed under “PowerShell”
+        Using PowerShell to launch multiple npm/yarn scripts in a multi-pane Windows Terminal
       </h1>
+      
+        <div class="intro__summary max-w-2xl space-y-5 text-sm leading-normal">
+          
+  <time datetime="">November 11, 2021</time>
+
+        </div>
       
     </div>
     
   </div>
 </header>
-  
-  <section class="post-list pt-7 mb-9">
-    <div class="post-list__inner container">
-      <h2 class="post-list__heading font-bold md:font-extrabold mb-2">
-        Posts
-      </h2>
-      <ol class="post-list__items pt-3 space-y-9" reversed>
-        
-          
-            <li class="post-list__item">
-              <h3 class="post-list__item-heading font-sans font-semibold text-lg text-color-inherit leading-tight mt-2 md:mt-0 mb-2 md:mb-3">
-                <a href="/posts/git-skip-worktree-powershell-functions/" class="post-list__link text-color-inherit no-underline" rel="bookmark">git skip-worktree PowerShell aliases</a>
-              </h3>
 
-              <time class="post-list__item-date" datetime="2021-08-06T00:00:00.000+00:00">August 6, 2021</time>
+    <div class="post__body container mt-9 mb-9 py-9 p-content">
+      <p>I have a monorepo consisting of multiple TypeScript projects, each one having
+its own dev server or file watcher.</p>
+<p>Firing up multiple terminals and manually starting the dev servers was getting
+tedious. So, I began looking for a way to automate it. Here's what I came up
+with.</p>
+<p>My solution uses Windows Terminal's split pane feature, which is sort of like
+tmux. Windows Terminal offers a CLI approach to launch a terminal, split it
+in to multiple panes, and execute a command in each one.</p>
+<p>I put together this PowerShell script to act as a shortcut:</p>
+<pre class="language-powershell"><code class="language-powershell"><span class="token variable">$WtArgs</span> = <span class="token punctuation">(</span><br>  <span class="token string">"new-tab -d . pwsh -NoProfile -NoExit -Command yarn workspace @foxandfly/package-1 run start ; "</span><span class="token punctuation">,</span><br>  <span class="token string">"split-pane -d . pwsh -NoProfile -NoExit -Command yarn workspace @foxandfly/package-2 run start ; "</span><span class="token punctuation">,</span><br>  <span class="token string">"split-pane -d . pwsh -NoProfile -NoExit -Command yarn workspace @foxandfly/package-3 run start "</span><br><span class="token punctuation">)</span><br><br><span class="token function">Start-Process</span> wt <span class="token variable">$WtArgs</span></code></pre>
+<p>So I create this file (dev.ps1) in my monorepo root and run it when I want to
+launch all of my dev servers at one time.</p>
 
-              <ul class="post-list__tags mt-2 flex flex-wrap items-center">
-                  <li class="mr-4">Tags:</li>
-                  
-                    <li class="mr-4">
-                      <a href="/tags/Windows">Windows</a>
-                    </li>
-                  
-                    <li class="mr-4">
-                      <a href="/tags/Git">Git</a>
-                    </li>
-                  
-                    <li class="mr-4">
-                      <a href="/tags/PowerShell">PowerShell</a>
-                    </li>
-                  
-                </ul>
-              
-            </li>
-          
-        
-          
-            <li class="post-list__item">
-              <h3 class="post-list__item-heading font-sans font-semibold text-lg text-color-inherit leading-tight mt-2 md:mt-0 mb-2 md:mb-3">
-                <a href="/posts/powershell-yarn-multipane-windows-terminal/" class="post-list__link text-color-inherit no-underline" rel="bookmark">Using PowerShell to launch multiple npm/yarn scripts in a multi-pane Windows Terminal</a>
-              </h3>
-
-              <time class="post-list__item-date" datetime="2021-11-11T00:00:00.000+00:00">November 11, 2021</time>
-
-              <ul class="post-list__tags mt-2 flex flex-wrap items-center">
-                  <li class="mr-4">Tags:</li>
-                  
-                    <li class="mr-4">
-                      <a href="/tags/Windows">Windows</a>
-                    </li>
-                  
-                    <li class="mr-4">
-                      <a href="/tags/PowerShell">PowerShell</a>
-                    </li>
-                  
-                    <li class="mr-4">
-                      <a href="/tags/Windows Terminal">Windows Terminal</a>
-                    </li>
-                  
-                    <li class="mr-4">
-                      <a href="/tags/yarn">yarn</a>
-                    </li>
-                  
-                    <li class="mr-4">
-                      <a href="/tags/npm">npm</a>
-                    </li>
-                  
-                </ul>
-              
-            </li>
-          
-        
-      </ol>
     </div>
-  </section>
 
-  
-
-
+    
+      <footer class="post__footer bg-primary text-primary-contrast py-5">
+        <div class="container flex align-center">
+          <h2 class="font-sans text-xl font-semibold text-color-inherit m-0">Filed under</h2>
+          <ul class="post__tags flex flex-wrap items-center ml-4">
+            <li class="mr-4">
+                <a href="/tags/Windows" class="tag">Windows</a>
+              </li>
+            <li class="mr-4">
+                <a href="/tags/PowerShell" class="tag">PowerShell</a>
+              </li>
+            <li class="mr-4">
+                <a href="/tags/Windows Terminal" class="tag">Windows Terminal</a>
+              </li>
+            <li class="mr-4">
+                <a href="/tags/yarn" class="tag">yarn</a>
+              </li>
+            <li class="mr-4">
+                <a href="/tags/npm" class="tag">npm</a>
+              </li>
+            
+          </ul>
+        </div>
+      </footer>
+    
+  </article>
 
   </main>
 
