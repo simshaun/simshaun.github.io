@@ -7,6 +7,7 @@ tags:
   - Windows Terminal
   - yarn
   - npm
+socialImage: https://shaun.pub/images/posts/powershell-yarn-multipane-windows-terminal.png
 ---
 
 I have a monorepo consisting of multiple TypeScript projects, each one having
@@ -34,3 +35,5 @@ Start-Process wt $WtArgs
 
 So I create this file (dev.ps1) in my monorepo root and run it when I want to
 launch all of my dev servers at one time.
+
+![Example of multi-pane terminal running multiple dev servers](/images/posts/powershell-yarn-multipane-windows-terminal.png)
