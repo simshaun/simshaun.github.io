@@ -11,6 +11,9 @@
   {% if metaDesc %}
     {% set pageDesc = metaDesc %}
   {% endif %}
+
+  {% set socialImage = socialImage | default('https://shaun.pub/images/twitter-card.png') %}
+  {% set socialImageAlt = socialImageAlt | default('shaun.pub') %}
 {% endfilter %}
 
 <title>{{ pageTitle }}</title>
@@ -34,6 +37,6 @@
 {% if socialImage %}
   <meta property="og:image" content="{{ socialImage }}" />
   <meta name="twitter:image" content="{{ socialImage }}" />
-  <meta property="og:image:alt" content="Page image for {{ site.name }}" />
-  <meta name="twitter:image:alt" content="Page image for {{ site.name }}" />
+  <meta property="og:image:alt" content="{{ socialImageAlt }}" />
+  <meta name="twitter:image:alt" content="{{ socialImageAlt }}" />
 {% endif %}
