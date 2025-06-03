@@ -1,4 +1,4 @@
-Sitemap: https://shaun.pub/sitemap.xml
+Sitemap: https://simshaun.com/sitemap.xml
 
 User-agent: *
 Disallow:
