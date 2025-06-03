@@ -8,13 +8,13 @@
   <link rel="shortcut icon" href="/images/favicon.png" type="image/png" sizes="512x512" />
    
 
-<title>Inserting En dash and Em dash on Windows - Shaun</title>
-<link rel="canonical" href="https://shaun.pub/posts/en-dash-em-dash-windows/" />
+<title>Getting your Audible library to Google Sheets - Shaun</title>
+<link rel="canonical" href="https://shaun.pub/posts/audible-library-to-google-sheets/" />
 
 <meta property="og:site_name" content="Shaun" />
-<meta property="og:title" content="Inserting En dash and Em dash on Windows - Shaun" />
+<meta property="og:title" content="Getting your Audible library to Google Sheets - Shaun" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://shaun.pub/posts/en-dash-em-dash-windows/" />
+<meta property="og:url" content="https://shaun.pub/posts/audible-library-to-google-sheets/" />
 
 
   <meta name="twitter:creator" content="@simshaun" />
@@ -92,12 +92,12 @@
   <div class="intro__inner container flex">
     <div class="space-y-5">
       <h1 class="intro__heading font-bold md:font-black text-color-inherit leading-tight">
-        Inserting En dash and Em dash on Windows
+        Getting your Audible library to Google Sheets
       </h1>
       
         <div class="intro__summary max-w-2xl space-y-5 text-sm leading-normal">
           
-  <time datetime="">February 6, 2019</time>
+  <time datetime="">June 3, 2025</time>
 
         </div>
       
@@ -107,20 +107,45 @@
 </header>
 
     <div class="post__body container mt-9 mb-9 py-9 p-content">
-      <p>Inserting En (–) dashes and Em (—) dashes on Windows can be difficult. Some word processing apps
-will convert multiple dashes into them, but usually I need them in websites or other apps.</p>
-<p>Keyboards with a numpad allow you to press Alt+0150 or Alt+0151, but what if you don’t
-have a numpad or don't want to remember the numbers?</p>
-<p>The solution I use is <a href="https://www.autohotkey.com/">AutoHotkey</a>. It’s a free scripting tool that
-lets you do all kinds of things. Here, I want to replicate Mac’s keyboard shortcuts:</p>
-<ul>
-<li>Alt+Minus for En dash</li>
-<li>Alt+Shift+Minus for Em dash</li>
-</ul>
-<p>The AutoHotkey script for it is pretty simple:</p>
-<pre class="language-autohotkey"><code class="language-autohotkey"><span class="token comment">; Alt+Minus = En dash</span><br><span class="token operator">!</span><span class="token operator">-</span><span class="token punctuation">:</span><span class="token punctuation">:</span> <br><span class="token selector">Send</span> <span class="token punctuation">{</span>–<span class="token punctuation">}</span><br><span class="token selector">return</span><br><br><span class="token comment">; Shift+Alt+Minus = Em dash</span><br><span class="token operator">+</span><span class="token operator">!</span><span class="token operator">-</span><span class="token punctuation">:</span><span class="token punctuation">:</span><br><span class="token selector">Send</span> <span class="token punctuation">{</span>—<span class="token punctuation">}</span><br><span class="token selector">return</span></code></pre>
-<p>Put that in your AutoHotkey script, reload AutoHotkey, and then you’ll be able to use
-those keyboard shortcuts practically anywhere.</p>
+      <p>For years, I’ve tracked my Audible purchases using a checklist in Google Keep to keep tabs on what I want to listen to next.</p>
+<p>My backlog got to a point that I sometimes forgot to add books and lost track of some series.</p>
+<p>Audible's tools are lackluster to say the least, but luckily people have put in the work to fill in the gap.</p>
+<p>In short, here's how I fixed my problem and improved automation of my audiobook tracking:</p>
+<ol>
+<li>Use <a href="https://github.com/mkb79/audible-cli">mkb79's audible-cli</a> to export my Audible library as a CSV/TSV.</li>
+<li>Create a Google Sheet to replace my Google Keep list.</li>
+<li>Create a Google Apps script on the spreadsheet that can handle the CSV/TSV.</li>
+<li>Set up a scheduled task that exports my Audible library CSV/TSV to Google Drive nightly.</li>
+<li>Set up the Google Apps script trigger to run nightly.</li>
+</ol>
+<p>While I’m not covering every step in detail, I’ve shared a ready-to-use spreadsheet template and the full Google Apps Script so you can set it up quickly.</p>
+<hr>
+<h2>Google Sheet Template</h2>
+<p>Opening the link below will let you create a copy of my sheet template with the Google Apps script already in place.</p>
+<p>https://docs.google.com/spreadsheets/d/1Gnm3rGYgoWN801sF9g_wkHlLkyu7clC4yOWavNtIELo/copy</p>
+<hr>
+<h2>Google Drive</h2>
+<p>If you want to use Google Drive for your CSV, such as when running a nightly export and saving it to Drive, follow these steps:</p>
+<ol>
+<li>Use audible-cli to export a CSV and upload it to Google Drive.</li>
+<li>Open the file on Google Drive, copy the URL, and get the file ID from it.</li>
+<li>In the Google Sheet, click <b>Extensions -&gt; Apps Script</b>. In the <code>Code.gs</code> file, add the file ID to the variable at the top.</li>
+<li>To automate the import to the spreadsheet, go to <b>Triggers</b> (on the left), and add a <b>time-based trigger</b> that runs the <code>importAudibleCsvFromDrive</code> function.</li>
+</ol>
+<hr>
+<h2>Apps Script</h2>
+<p>The Apps Script adds a <b>&quot;Book Tools&quot;</b> menu to the Google Sheets toolbar.</p>
+<p>It provides the following tools:</p>
+<ol>
+<li>Upload audible-cli CSV</li>
+<li>Import CSV from Drive. <em>This just triggers the Drive import if you don't want to wait for your time-based trigger.</em></li>
+<li>Sort books by author &amp; series</li>
+</ol>
+<p>NOTE: The script does not overwrite any books in your spreadsheet. It only adds new ones.</p>
+<hr>
+<h2>Sorting</h2>
+<p>Some book series are sequels or continuations of others. If you want them to sort properly, go to the <code>SeriesSortOrder</code> sheet
+and set them up. Col 1 is the author, Col 2 is the series name, Col 3 is the order you want them to appear.</p>
 
     </div>
 
@@ -130,10 +155,7 @@ those keyboard shortcuts practically anywhere.</p>
           <h2 class="font-sans text-xl font-semibold text-color-inherit m-0">Filed under</h2>
           <ul class="post__tags flex flex-wrap items-center ml-4">
             <li class="mr-4">
-                <a href="/tags/Windows" class="tag">Windows</a>
-              </li>
-            <li class="mr-4">
-                <a href="/tags/AutoHotkey" class="tag">AutoHotkey</a>
+                <a href="/tags/Audible" class="tag">Audible</a>
               </li>
             
           </ul>
