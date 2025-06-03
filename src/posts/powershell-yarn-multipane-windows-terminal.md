@@ -7,7 +7,7 @@ tags:
   - Windows Terminal
   - yarn
   - npm
-socialImage: https://shaun.pub/images/posts/powershell-yarn-multipane-windows-terminal.png
+socialImage: https://simshaun.com/images/posts/powershell-yarn-multipane-windows-terminal.png
 ---
 
 I have a monorepo consisting of multiple TypeScript projects, each one having
