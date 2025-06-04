@@ -10,18 +10,17 @@ tags:
 socialImage: https://simshaun.com/images/posts/powershell-yarn-multipane-windows-terminal.png
 ---
 
-I have a monorepo consisting of multiple TypeScript projects, each one having
-its own dev server or file watcher.
+I have a monorepo with multiple TypeScript projects, each with its own dev
+server or file watcher.
 
-Firing up multiple terminals and manually starting the dev servers was getting
-tedious. So, I began looking for a way to automate it. Here's what I came up
-with.
+Manually opening multiple terminals and starting each dev server became
+repetitive, so I looked for a way to automate it.
 
-My solution uses Windows Terminal's split pane feature, which is sort of like
-tmux. Windows Terminal offers a CLI approach to launch a terminal, split it
-in to multiple panes, and execute a command in each one.
+My solution uses Windows Terminal's split pane feature, similar to tmux.
+Windows Terminal provides a CLI interface to launch a terminal, split it into
+multiple panes, and run a command in each one.
 
-I put together this PowerShell script to act as a shortcut:
+I wrote this PowerShell script as a shortcut:
 
 ```powershell
 $WtArgs = (
@@ -32,8 +31,7 @@ $WtArgs = (
 
 Start-Process wt $WtArgs
 ```
-
-So I create this file (dev.ps1) in my monorepo root and run it when I want to
-launch all of my dev servers at one time.
+So now, whenever I want to start all my dev servers, I just run dev.ps1 from
+the root of my monorepo.
 
 ![Example of multi-pane terminal running multiple dev servers](/images/posts/powershell-yarn-multipane-windows-terminal.png)
